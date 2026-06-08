@@ -7,14 +7,18 @@
   <meta name="description" content="Compete on Terminal-Bench 2.1 tracks through Novita Sandbox, then submit your public Harbor Hub job link to the live leaderboard.">
   <style>
     :root {
-      --bg: #fafafa;
+      --bg: #f5f5f2;
       --paper: #ffffff;
-      --ink: #080808;
-      --muted: #686868;
-      --soft: #eeeeee;
-      --line: #dedede;
-      --green: #c7ff44;
-      --shadow: 0 34px 90px rgba(0, 0, 0, .08);
+      --ink: #000000;
+      --ink-2: #262626;
+      --muted: #737373;
+      --soft: #e5e5e5;
+      --line: rgba(0, 0, 0, .13);
+      --green: #23d57c;
+      --green-soft: rgba(35, 213, 124, .13);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: "Aptos", "DM Sans", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --shadow: 0 24px 70px rgba(0, 0, 0, .08);
     }
 
     * {
@@ -28,14 +32,25 @@
     body {
       margin: 0;
       background:
-        linear-gradient(90deg, rgba(0,0,0,.035) 1px, transparent 1px),
-        linear-gradient(rgba(0,0,0,.035) 1px, transparent 1px),
+        radial-gradient(circle at 18% 12%, rgba(35, 213, 124, .18), transparent 30%),
+        linear-gradient(90deg, rgba(0,0,0,.045) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,.045) 1px, transparent 1px),
         var(--bg);
-      background-size: 42px 42px;
+      background-size: auto, 32px 32px, 32px 32px, auto;
       color: var(--ink);
-      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: var(--sans);
       letter-spacing: 0;
       overflow-x: hidden;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.56) 42%, rgba(245,245,242,.82));
+      content: "";
     }
 
     a {
@@ -58,8 +73,8 @@
       top: 0;
       z-index: 10;
       border-bottom: 1px solid var(--line);
-      background: rgba(250, 250, 250, .86);
-      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, .82);
+      backdrop-filter: blur(20px);
     }
 
     .nav-inner {
@@ -73,32 +88,35 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-weight: 760;
+      gap: 1px;
+      font-weight: 700;
+      user-select: none;
     }
 
     .novita-combine {
       display: block;
-      width: 198px;
-      height: 50px;
+      width: 170px;
+      height: 35px;
       color: var(--ink);
       flex: 0 0 auto;
     }
 
     .brand-sep {
       color: var(--muted);
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 500;
       line-height: 1;
-      transform: translateY(1px);
+      transform: translateY(-2px, 1px);
+      margin-right: 9px;
     }
 
     .brand-harbor {
       color: var(--ink);
+      font-family: "Arial Black", "Aptos Display", var(--sans);
       font-size: 28px;
-      font-weight: 850;
-      line-height: 1;
-      transform: translateY(1px);
+      font-weight: 900;
+      letter-spacing: -.02em;
+      line-height: .95;
     }
 
     .nav-links {
@@ -107,6 +125,7 @@
       gap: 22px;
       color: var(--muted);
       font-size: 14px;
+      line-height: 20px;
     }
 
     .nav-links a:hover {
@@ -129,80 +148,199 @@
       justify-content: flex-end;
       min-height: 32px;
       border: 1px solid rgba(8, 8, 8, .18);
-      background: rgba(250, 250, 250, .88);
+      border-radius: 3px;
+      background: rgba(255, 255, 255, .88);
       padding: 0 10px;
       color: var(--muted);
-      font: 850 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 700 11px/1 var(--mono);
       text-transform: uppercase;
       backdrop-filter: blur(12px);
     }
 
     .rail-nav a:hover {
-      border-color: var(--ink);
-      background: var(--green);
+      border-color: var(--green);
+      background: var(--green-soft);
       color: var(--ink);
       text-decoration: none;
     }
 
     .hero {
-      min-height: auto;
-      padding: 34px 0 18px;
+      position: relative;
+      padding: 62px 0 46px;
+      border-top: 0;
     }
 
     .hero-main {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .58fr);
+      gap: 38px;
+      align-items: end;
+    }
+
+    .hero-main > * {
+      min-width: 0;
+    }
+
+    .hero-copy {
+      display: grid;
       gap: 24px;
+      align-content: start;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      margin-bottom: 20px;
+      width: fit-content;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.7);
+      padding: 7px 10px;
       color: #111;
-      font: 760 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 700 11px/1 var(--mono);
       text-transform: uppercase;
+      backdrop-filter: blur(20px);
     }
 
     .dot {
-      width: 9px;
-      height: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
       background: var(--green);
-      border: 1px solid var(--ink);
+      box-shadow: 0 0 0 4px rgba(35, 213, 124, .16);
     }
 
     h1 {
       margin: 0;
-      max-width: 880px;
-      font-size: clamp(34px, 5vw, 62px);
+      max-width: 860px;
+      font-size: clamp(40px, 5vw, 68px);
       line-height: .98;
       letter-spacing: 0;
-      font-weight: 850;
+      font-weight: 780;
+      overflow-wrap: normal;
     }
 
     h1 span {
       display: block;
     }
 
+    .hero-lead {
+      max-width: 690px;
+      margin: 0;
+      color: var(--ink-2);
+      font-size: clamp(17px, 1.5vw, 21px);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .hero-facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .fact-card,
+    .step-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .fact-card {
+      padding: 14px;
+    }
+
+    .fact-card strong {
+      display: block;
+      color: var(--ink);
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .fact-card span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font: 700 11px/1.25 var(--mono);
+      text-transform: uppercase;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
-      padding: 0 20px;
+      min-height: 44px;
+      border-radius: 4px;
+      padding: 0 18px;
       border: 1px solid var(--ink);
       background: var(--ink);
       color: #fff;
       font-size: 14px;
-      font-weight: 760;
-      transition: transform .18s ease, box-shadow .18s ease;
+      font-weight: 700;
+      line-height: 20px;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, .14);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .16);
       text-decoration: none;
+    }
+
+    .btn.secondary {
+      background: var(--paper);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .btn.secondary:hover {
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .btn[disabled],
+    .btn[aria-disabled="true"] {
+      opacity: .58;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn.text {
+      border-color: var(--line);
+      background: rgba(255,255,255,.62);
+      color: var(--ink);
+      padding-inline: 16px;
+    }
+
+    .btn.text:hover {
+      border-color: var(--line);
+      background: rgba(255,255,255,.72);
+      box-shadow: none;
+    }
+
+    .details-cta {
+      border-color: var(--green);
+      background: var(--green);
+      color: var(--ink);
+      min-width: 178px;
+      box-shadow: 0 12px 30px rgba(35, 213, 124, .22);
+    }
+
+    .details-cta:hover {
+      border-color: var(--green);
+      background: var(--green);
+      box-shadow: 0 16px 38px rgba(35, 213, 124, .3);
     }
 
     .points {
@@ -210,7 +348,7 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
       max-width: none;
-      margin: 20px 0 0;
+      margin: 0;
     }
 
     .point {
@@ -226,9 +364,89 @@
       width: 11px;
       height: 11px;
       margin-top: 8px;
-      border: 1px solid var(--ink);
+      border-radius: 999px;
       background: var(--green);
+      box-shadow: 0 0 0 4px rgba(35, 213, 124, .12);
       content: "";
+    }
+
+    .hero-terminal {
+      width: 100%;
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: 18px 18px 0 rgba(35, 213, 124, .22), var(--shadow);
+    }
+
+    .hero-terminal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,.16);
+      background: #0a0a0a;
+      padding: 12px 14px;
+      color: #a1a1a1;
+      font: 700 11px/1 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .window-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #404040;
+    }
+
+    .window-dots span:first-child {
+      background: var(--green);
+    }
+
+    .hero-terminal-body {
+      display: grid;
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .hero-terminal .code {
+      overflow-x: hidden;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .metric {
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 4px;
+      padding: 12px;
+      background: rgba(255,255,255,.04);
+    }
+
+    .metric span {
+      display: block;
+      color: #a1a1a1;
+      font: 700 10px/1 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      color: #ffffff;
+      font-size: 24px;
+      line-height: 1;
     }
 
     .credit {
@@ -238,10 +456,11 @@
       align-items: center;
       max-width: 600px;
       margin-top: 32px;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background: var(--paper);
       padding: 18px 20px;
-      box-shadow: 12px 12px 0 var(--green);
+      box-shadow: 12px 12px 0 rgba(35, 213, 124, .22);
     }
 
     .details-grid {
@@ -264,8 +483,50 @@
       font-size: 15px;
     }
 
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .step-card {
+      position: relative;
+      min-height: 190px;
+      padding: 22px;
+    }
+
+    .step-card::before {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(35, 213, 124, .7);
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--ink);
+      font: 800 12px/1 var(--mono);
+      content: attr(data-step);
+    }
+
+    .step-card h3 {
+      margin: 24px 0 10px;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .step-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
     .command-card {
+      overflow: hidden;
       border: 1px solid var(--ink);
+      border-radius: 8px;
       background: var(--paper);
       box-shadow: var(--shadow);
     }
@@ -276,8 +537,8 @@
       justify-content: space-between;
       border-bottom: 1px solid var(--ink);
       padding: 13px 15px;
-      background: var(--green);
-      font: 800 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: var(--green-soft);
+      font: 700 12px/1 var(--mono);
       text-transform: uppercase;
     }
 
@@ -298,7 +559,8 @@
       background: #0b0b0b;
       color: #f7f7f7;
       padding: 18px;
-      font: 720 14px/1.7 ui-monospace, SFMono-Regular, Menlo, monospace;
+      border-radius: 4px;
+      font: 700 14px/1.7 var(--mono);
       white-space: pre;
     }
 
@@ -322,7 +584,7 @@
     }
 
     section {
-      padding: 58px 0;
+      padding: 64px 0;
       border-top: 1px solid var(--line);
     }
 
@@ -345,9 +607,10 @@
       align-items: center;
       gap: 8px;
       border: 1px solid var(--ink);
+      border-radius: 999px;
       background: var(--paper);
       padding: 8px 10px;
-      font: 850 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 700 11px/1 var(--mono);
       text-transform: uppercase;
     }
 
@@ -360,8 +623,7 @@
     }
 
     .leaderboard-section {
-      padding-top: 44px;
-      border-top: 0;
+      padding-top: 64px;
     }
 
     .track-copy {
@@ -370,6 +632,40 @@
       gap: 28px;
       align-items: end;
       margin-bottom: 28px;
+    }
+
+    .steps-compact {
+      display: grid;
+      gap: 10px;
+    }
+
+    .step-mini {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255,255,255,.74);
+      padding: 12px;
+    }
+
+    .step-mini strong {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(35, 213, 124, .7);
+      border-radius: 999px;
+      background: var(--green-soft);
+      font: 800 12px/1 var(--mono);
+    }
+
+    .step-mini span {
+      color: var(--ink-2);
+      font-size: 14px;
+      line-height: 1.45;
     }
 
     .filters {
@@ -381,25 +677,34 @@
 
     .filter {
       min-height: 38px;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 4px;
       background: var(--paper);
       padding: 0 14px;
       color: var(--ink);
-      font: 800 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 700 12px/1 var(--mono);
       text-transform: uppercase;
       cursor: pointer;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease;
     }
 
     .filter.active {
-      background: var(--green);
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .filter:hover {
+      transform: translateY(-1px);
+      border-color: var(--ink);
     }
 
     h2 {
       margin: 0;
       max-width: 740px;
-      font-size: clamp(36px, 5vw, 66px);
-      line-height: .94;
+      font-size: clamp(34px, 4.7vw, 64px);
+      line-height: .9;
       letter-spacing: 0;
+      font-weight: 760;
     }
 
     .hint {
@@ -412,10 +717,12 @@
     .leaderboard {
       position: relative;
       border: 1px solid var(--ink);
+      border-radius: 8px;
       background: var(--paper);
       overflow-x: auto;
       overflow-y: hidden;
       max-width: 100%;
+      box-shadow: var(--shadow);
     }
 
     .join-strip {
@@ -424,7 +731,8 @@
       gap: 18px;
       align-items: center;
       margin-top: 18px;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background: var(--paper);
       padding: 18px 20px;
     }
@@ -448,9 +756,17 @@
     }
 
     .rule-card {
-      border: 1px solid var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background: var(--paper);
       padding: 20px;
+      transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+
+    .rule-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(35, 213, 124, .7);
+      box-shadow: 0 16px 44px rgba(0,0,0,.07);
     }
 
     .rule-card strong {
@@ -471,6 +787,7 @@
       gap: 24px;
       align-items: center;
       border: 1px solid var(--ink);
+      border-radius: 8px;
       background: var(--ink);
       color: var(--paper);
       padding: clamp(26px, 5vw, 48px);
@@ -512,7 +829,8 @@
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 10px;
       margin: 22px 0 18px;
-      border: 1px solid var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background: var(--paper);
       padding: 14px;
     }
@@ -520,10 +838,17 @@
     .submit-panel input {
       min-width: 0;
       border: 1px solid var(--line);
+      border-radius: 4px;
       background: #fff;
       color: var(--ink);
       padding: 0 14px;
-      font: 600 14px/44px ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 600 14px/44px var(--mono);
+    }
+
+    .submit-panel input:focus {
+      outline: 2px solid rgba(35, 213, 124, .42);
+      outline-offset: 2px;
+      border-color: var(--green);
     }
 
     .submit-note {
@@ -531,6 +856,211 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.45;
+    }
+
+    .submit-shell {
+      display: grid;
+      grid-template-columns: minmax(0, .78fr) minmax(340px, .52fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .details-modal {
+      width: min(760px, calc(100% - 32px));
+      max-height: min(860px, calc(100vh - 48px));
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: #050505;
+      color: #ffffff;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 30px 100px rgba(0,0,0,.45);
+    }
+
+    .details-modal::backdrop {
+      background: rgba(0,0,0,.46);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-inner {
+      max-height: inherit;
+      overflow: auto;
+      padding: clamp(22px, 4vw, 34px);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .modal-kicker {
+      margin: 10px 0 0;
+      color: var(--green);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .modal-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(35,213,124,.7);
+      border-radius: 999px;
+      background: transparent;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .modal-callout {
+      border-left: 4px solid var(--green);
+      border-radius: 4px;
+      background: rgba(35,213,124,.08);
+      padding: 16px 18px;
+      color: #f4f4f4;
+      line-height: 1.6;
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .modal-panel {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: rgba(255,255,255,.045);
+      padding: 20px;
+    }
+
+    .modal-panel h3,
+    .timeline h3 {
+      margin: 0 0 16px;
+      color: #ffffff;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .modal-panel p,
+    .modal-panel li {
+      color: #e5e5e5;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .modal-panel ul {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .prize-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .prize-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      background: rgba(255,255,255,.045);
+      padding: 14px;
+      color: #ffffff;
+    }
+
+    .prize-item strong {
+      color: var(--green);
+      text-align: right;
+    }
+
+    .judging-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .judging-card {
+      border: 1px solid rgba(35,213,124,.28);
+      border-radius: 8px;
+      background: rgba(35,213,124,.08);
+      padding: 14px;
+    }
+
+    .judging-card strong {
+      display: block;
+      color: var(--green);
+      font-size: 26px;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    .modal-actions .btn {
+      background: var(--green);
+      border-color: var(--green);
+      color: #000000;
+    }
+
+    .modal-actions .btn.secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,.24);
+      color: #ffffff;
+    }
+
+    .timeline {
+      margin-top: 18px;
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .timeline-card {
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      background: rgba(255,255,255,.045);
+      padding: 16px;
+    }
+
+    .timeline-card strong {
+      display: block;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+
+    .timeline-card span {
+      color: #cfcfcf;
+      font-size: 14px;
     }
 
     table {
@@ -550,8 +1080,12 @@
     th {
       background: #f0f0f0;
       color: #555;
-      font: 800 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 700 12px/1 var(--mono);
       text-transform: uppercase;
+    }
+
+    tbody tr:hover {
+      background: rgba(35, 213, 124, .045);
     }
 
     tr:last-child td {
@@ -568,17 +1102,18 @@
     tbody tr:nth-child(5) { animation-delay: .32s; }
 
     .rank {
-      font: 850 14px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 800 14px/1 var(--mono);
     }
 
     .score {
       display: inline-flex;
       min-width: 58px;
       justify-content: center;
-      border: 1px solid var(--ink);
-      background: var(--green);
+      border: 1px solid rgba(35, 213, 124, .7);
+      border-radius: 4px;
+      background: var(--green-soft);
       padding: 7px 9px;
-      font: 850 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 800 13px/1 var(--mono);
       animation: scoreGlow 2.8s ease-in-out infinite;
     }
 
@@ -586,11 +1121,12 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--ink);
-      background: var(--green);
+      border: 1px solid rgba(35, 213, 124, .7);
+      border-radius: 4px;
+      background: var(--green-soft);
       padding: 7px 10px;
       color: var(--ink);
-      font: 850 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+      font: 800 12px/1 var(--mono);
       white-space: nowrap;
     }
 
@@ -605,6 +1141,7 @@
     }
 
     .job-link.pending {
+      border-color: var(--line);
       background: #f6f6f6;
       color: var(--muted);
       cursor: default;
@@ -622,10 +1159,10 @@
 
     @keyframes livePulse {
       0%, 100% {
-        box-shadow: 0 0 0 0 rgba(199, 255, 68, .55);
+        box-shadow: 0 0 0 0 rgba(35, 213, 124, .55);
       }
       50% {
-        box-shadow: 0 0 0 7px rgba(199, 255, 68, 0);
+        box-shadow: 0 0 0 7px rgba(35, 213, 124, 0);
       }
     }
 
@@ -634,16 +1171,16 @@
         background: transparent;
       }
       18% {
-        background: rgba(199,255,68,.045);
+        background: rgba(35, 213, 124, .045);
       }
     }
 
     @keyframes scoreGlow {
       0%, 100% {
-        box-shadow: inset 0 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(199,255,68,0);
+        box-shadow: inset 0 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(35,213,124,0);
       }
       50% {
-        box-shadow: inset 0 0 0 1px rgba(0,0,0,.08), 0 0 18px rgba(199,255,68,.38);
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,.08), 0 0 18px rgba(35,213,124,.22);
       }
     }
 
@@ -671,9 +1208,13 @@
 
       .hero-main,
       .details-grid,
-      .track-copy,
-      .section-title {
+      .track-copy {
         grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .point {
@@ -690,6 +1231,8 @@
       }
 
       .rule-grid,
+      .steps-grid,
+      .submit-shell,
       .program-card {
         grid-template-columns: 1fr;
       }
@@ -700,15 +1243,44 @@
 
     @media (max-width: 600px) {
       .wrap {
-        width: min(100% - 28px, 1120px);
+        width: calc(100% - 28px);
+        margin-left: 14px;
+        margin-right: auto;
       }
 
       .hero {
         padding-top: 44px;
       }
 
+      .hero-main {
+        gap: 28px;
+      }
+
+      .hero-terminal {
+        max-width: 100%;
+        box-shadow: 8px 8px 0 rgba(35, 213, 124, .22), var(--shadow);
+      }
+
+      .hero-terminal-head {
+        gap: 12px;
+      }
+
+      .hero-terminal-head > span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .hero-terminal .code {
+        font-size: 12px;
+        line-height: 1.65;
+      }
+
       h1 {
-        font-size: clamp(34px, 9.4vw, 42px);
+        font-size: clamp(32px, 8.4vw, 38px);
+        line-height: 1.02;
+        overflow-wrap: anywhere;
       }
 
       .track-copy h1 {
@@ -725,6 +1297,66 @@
         max-width: 360px;
       }
 
+      .hero-facts {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions .btn {
+        flex: 1 1 100%;
+        min-width: 0;
+        padding-inline: 12px;
+        font-size: 13px;
+      }
+
+      .dataset-table {
+        overflow-x: hidden;
+      }
+
+      .dataset-table table {
+        min-width: 0;
+      }
+
+      .dataset-table thead {
+        display: none;
+      }
+
+      .dataset-table tbody,
+      .dataset-table tr,
+      .dataset-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .dataset-table tr {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .dataset-table tr:last-child {
+        border-bottom: 0;
+      }
+
+      .dataset-table td {
+        display: grid;
+        grid-template-columns: 116px minmax(0, 1fr);
+        gap: 12px;
+        border-bottom: 0;
+        padding: 8px 0;
+        overflow-wrap: anywhere;
+      }
+
+      .dataset-table td::before {
+        color: var(--muted);
+        font: 800 11px/1.3 var(--mono);
+        text-transform: uppercase;
+      }
+
+      .dataset-table td:nth-child(1)::before { content: "Track"; }
+      .dataset-table td:nth-child(2)::before { content: "Dataset"; }
+      .dataset-table td:nth-child(3)::before { content: "Tasks"; }
+      .dataset-table td:nth-child(4)::before { content: "Categories"; }
+      .dataset-table td:nth-child(5)::before { content: "Best for"; }
+
       .command-body {
         padding: 18px;
       }
@@ -739,7 +1371,11 @@
 
       .credit {
         grid-template-columns: 1fr;
-        box-shadow: 8px 8px 0 var(--green);
+        box-shadow: 8px 8px 0 rgba(35, 213, 124, .22);
+      }
+
+      .metric-grid {
+        grid-template-columns: 1fr;
       }
 
       .leaderboard {
@@ -780,7 +1416,7 @@
 
       .scoreboard td::before {
         color: var(--muted);
-        font: 800 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+        font: 800 11px/1.3 var(--mono);
         text-transform: uppercase;
       }
 
@@ -795,13 +1431,19 @@
       .submit-panel {
         grid-template-columns: 1fr;
       }
+
+      .modal-grid,
+      .timeline-grid,
+      .judging-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <nav class="nav">
       <div class="wrap nav-inner">
-        <a class="brand" href="#" aria-label="Novita x Harbor">
+        <div class="brand" aria-label="Novita x Harbor">
           <svg class="novita-combine" viewBox="0 0 220.27 56" role="img" aria-label="Novita AI" xmlns="http://www.w3.org/2000/svg">
             <title>Novita AI</title>
             <g transform="scale(2.3333333333)">
@@ -813,35 +1455,71 @@
           </svg>
           <span class="brand-sep">×</span>
           <span class="brand-harbor">Harbor</span>
-        </a>
+        </div>
         <div class="nav-links" aria-label="Page navigation">
-        <a href="#tracks">Tracks</a>
         <a href="#board">Leaderboard</a>
-        <a href="#rules">Rules</a>
-        <a href="#rewards">Rewards</a>
-        <a href="#startup">Startup</a>
-        <a href="mailto:devrel@novita.ai?subject=Harbor%20Agent%20Benchmark%20Submission">Submit</a>
+        <a href="#tracks">How + Tracks</a>
+        <a href="#submit">Submit</a>
+        <a href="#startup">Startup Program</a>
         </div>
       </div>
   </nav>
 
   <aside class="rail-nav" aria-label="Page quick navigation">
     <a href="#board">Board</a>
-    <a href="#tracks">Tracks</a>
-    <a href="#participate">Join</a>
-    <a href="#rules">Rules</a>
-    <a href="#rewards">Rewards</a>
+    <a href="#tracks">How</a>
+    <a href="#submit">Submit</a>
     <a href="#startup">Startup</a>
   </aside>
 
   <main>
+    <section class="hero" id="top">
+      <div class="wrap hero-main">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span>AI Agent Benchmark Challenge</div>
+          <h1><span>Evaluate your agent</span><span>on TB2.1 with</span><span>Novita Sandbox.</span></h1>
+          <p class="hero-lead">
+            Put your AI agent on public Terminal-Bench 2.1 tracks, submit a Harbor Hub run,
+            and compare performance on a live leaderboard for Novita credits.
+          </p>
+          <div class="hero-actions">
+            <a class="btn" href="#board">View leaderboard</a>
+            <a class="btn secondary" href="#tracks">Choose a track</a>
+            <button class="btn details-cta" type="button" data-open-details>Hackathon details</button>
+          </div>
+          <div class="hero-facts" aria-label="Challenge facts">
+            <div class="fact-card"><strong>4</strong><span>Public tracks</span></div>
+            <div class="fact-card"><strong>89</strong><span>TB2.1 tasks</span></div>
+            <div class="fact-card"><strong>$120</strong><span>Trial + LLM credits</span></div>
+            <div class="fact-card"><strong>Track winners</strong><span>$500 Sandbox + $200 LLM</span></div>
+          </div>
+        </div>
+
+        <aside class="hero-terminal" aria-label="Hackathon status summary">
+          <div class="hero-terminal-head">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <span>TB2.1 / Novita Sandbox</span>
+          </div>
+          <div class="hero-terminal-body">
+            <code class="code"><span class="accent">$</span> harbor run -d NovitaAI/tb21-file-recovery -a opencode -m deepseek/deepseek-v4-flash -e novita
+<span class="accent">$</span> harbor upload jobs/&lt;job_name&gt; --public</code>
+            <div class="metric-grid">
+              <div class="metric"><span>Tracks</span><strong>4</strong></div>
+              <div class="metric"><span>Tasks</span><strong>89</strong></div>
+              <div class="metric"><span>Trial + LLM</span><strong>$120</strong></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
     <section class="leaderboard-section" id="board">
       <div class="wrap">
         <div class="section-title">
-          <h2>Leaderboard</h2>
+          <h2>Live leaderboard</h2>
           <div class="live-copy">
-            <span class="live-badge"><span class="live-dot"></span>Live runs</span>
-            <p class="hint">Public Harbor Hub jobs from TB2.1 agents running on Novita Sandbox.</p>
+            <span class="live-badge"><span class="live-dot"></span>Public jobs only</span>
+            <p class="hint">Eligible entries must include public Harbor Hub jobs from TB2.1 agents running on Novita Sandbox.</p>
           </div>
         </div>
 
@@ -916,14 +1594,6 @@
             </tbody>
           </table>
         </div>
-
-        <div class="join-strip">
-          <div>
-            <strong>Ready to compete?</strong>
-            <span>Pick a track dataset, run it on Novita Sandbox, upload the Harbor job publicly, then submit your link.</span>
-          </div>
-          <a class="btn" href="#participate">Join the Builder Challenge</a>
-        </div>
       </div>
     </section>
 
@@ -934,15 +1604,14 @@
             <div class="eyebrow"><span class="dot"></span>Public track datasets</div>
             <h1><span>TB2.1 Track</span><span>Datasets on</span><span>Novita Sandbox</span></h1>
           </div>
-          <div class="points">
-            <div class="point">Terminal-Bench 2.1 is split into four Novita datasets by original task category.</div>
-            <div class="point">Novita Sandbox is the standardized execution environment.</div>
-            <div class="point">Participants can bring any agent.</div>
-            <div class="point">Completed public Harbor Hub jobs power the leaderboard.</div>
+          <div class="steps-compact" aria-label="How it works">
+            <div class="step-mini"><strong>01</strong><span>Choose one public TB2.1 track dataset.</span></div>
+            <div class="step-mini"><strong>02</strong><span>Run your agent in Novita Sandbox.</span></div>
+            <div class="step-mini"><strong>03</strong><span>Upload and submit a public Harbor job.</span></div>
           </div>
         </div>
 
-        <div class="leaderboard">
+        <div class="leaderboard dataset-table">
           <table>
             <thead>
               <tr>
@@ -995,14 +1664,14 @@
       </div>
     </section>
 
-    <section id="participate">
+    <section id="submit">
       <div class="wrap">
         <div class="section-title">
-          <h2>How to participate</h2>
-          <p class="hint">Run with Novita Sandbox, upload the Harbor job publicly, then submit the link.</p>
+          <h2>Run and submit</h2>
+          <p class="hint">Use the Harbor CLI, upload the public job, then paste the Harbor Hub link.</p>
         </div>
 
-        <div class="details-grid">
+        <div class="submit-shell">
           <aside class="command-card" aria-label="Participation command">
             <div class="command-head">
               <span>Run and upload</span>
@@ -1011,20 +1680,16 @@
             <div class="command-body">
               <div class="command-label">Example: choose one Novita track dataset, run it, then upload the public job.</div>
               <code class="code"><span class="accent">$</span> harbor run \
-  -d NovitaAI/tb21-code-debug \
-  -a ./my-agent \
-  --env novita-sandbox
+  -d NovitaAI/tb21-file-recovery \
+  -a opencode \
+  -m deepseek/deepseek-v4-flash \
+  -e novita
 
 <span class="accent">$</span> harbor upload jobs/&lt;job_name&gt; --public</code>
             </div>
           </aside>
 
           <div>
-            <div class="credit">
-              <strong>$100</strong>
-              <span>Novita free trial credits for every registered individual user.</span>
-            </div>
-
             <form class="submit-panel" id="job-form">
               <input id="job-url" name="job-url" type="url" placeholder="https://hub.harborframework.com/jobs/2b32f9ad-a948-473d-8c76-dde10e90cb2d" required>
               <button class="btn" type="submit">Add job link</button>
@@ -1044,65 +1709,7 @@
       </div>
     </section>
 
-    <section id="rules">
-      <div class="wrap">
-        <div class="section-title">
-          <h2>Hackathon Rules</h2>
-          <p class="hint">Simple rules keep the public leaderboard comparable, reproducible, and fair.</p>
-        </div>
 
-        <div class="rule-grid">
-          <div class="rule-card">
-            <strong>Multiple entries allowed</strong>
-            <span>Each participant can submit multiple works across tracks. Only the highest eligible score per track is considered.</span>
-          </div>
-          <div class="rule-card">
-            <strong>One prize per participant</strong>
-            <span>If one participant wins multiple tracks, they receive one award; other track awards roll down to the next eligible participant.</span>
-          </div>
-          <div class="rule-card">
-            <strong>Discord record required</strong>
-            <span>Every submitted work must have a matching submission record in the relevant Discord channel.</span>
-          </div>
-          <div class="rule-card">
-            <strong>Real Sandbox run required</strong>
-            <span>A genuine Novita Sandbox run report is required for eligibility, along with a public Harbor Hub job link.</span>
-          </div>
-          <div class="rule-card">
-            <strong>No fake or copied entries</strong>
-            <span>False demos, non-real runs, plagiarism, or artificial traffic manipulation will result in disqualification.</span>
-          </div>
-          <div class="rule-card">
-            <strong>Community incentives</strong>
-            <span>Selected high-quality run reports, technical analyses, bug/risk cases, and helpful community support may receive $20-$50 credits.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="rewards">
-      <div class="wrap">
-        <div class="section-title">
-          <h2>Rewards</h2>
-          <p class="hint">Credits reward strong benchmark performance and useful community contributions.</p>
-        </div>
-
-        <div class="rule-grid">
-          <div class="rule-card">
-            <strong>$100 trial credits</strong>
-            <span>All individual users can receive $100 Novita free trial credits after registering.</span>
-          </div>
-          <div class="rule-card">
-            <strong>$300 per track winner</strong>
-            <span>Each track winner receives $300 Novita credits, subject to the one-prize-per-participant rule.</span>
-          </div>
-          <div class="rule-card">
-            <strong>$20-$50 community credits</strong>
-            <span>Small credit awards may be used for high-quality reports, useful analysis, bug/risk cases, and participant support.</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section id="startup">
       <div class="wrap">
@@ -1110,17 +1717,12 @@
           <div>
             <h2>Startup Program</h2>
             <p>
-              Startup Program is not required for the Challenge. AI startups with a company entity can apply directly
-              for up to $10,000 credits, especially teams working on Coding Agents, Evals, DevTools, AI Infra,
-              Sandbox, or unknown-code execution.
-            </p>
-            <p>
-              After the event, Novita may follow up with teams that have a company entity, real commercial scenarios,
-              strong project quality, clear production Sandbox needs, or partnership and credits interest.
+              Building AI agents, devtools, evals, or sandbox-heavy products? Eligible AI-native startups can apply
+              for up to $10,000 in Novita cloud credits across Model APIs and Agent Sandbox.
             </p>
             <div class="dual-cta">
-              <a class="btn" href="#participate">Join the Builder Challenge</a>
-              <a class="btn secondary" href="mailto:devrel@novita.ai?subject=Novita%20Startup%20Program">Apply for Novita Startup Program</a>
+              <button class="btn" type="button" data-open-startup>Learn more</button>
+              <button class="btn secondary" type="button" disabled aria-disabled="true">Apply form coming soon</button>
             </div>
           </div>
         </div>
@@ -1128,6 +1730,147 @@
     </section>
 
   </main>
+
+  <dialog class="details-modal" id="details-modal" aria-labelledby="details-title">
+    <div class="modal-inner">
+      <div class="modal-head">
+        <div>
+          <h2 class="modal-title" id="details-title">Harbor Agent Benchmark</h2>
+          <p class="modal-kicker">Evaluate it. Compare it. Put your agent on the board.</p>
+        </div>
+        <button class="modal-close" type="button" data-close-details aria-label="Close details">×</button>
+      </div>
+
+      <div class="modal-callout">
+        Compete on public Terminal-Bench 2.1 tracks using Novita Sandbox as the shared execution environment.
+        Public Harbor Hub jobs are the source of truth for leaderboard eligibility.
+      </div>
+
+      <div class="modal-grid">
+        <section class="modal-panel" aria-label="What you will submit">
+          <h3>What you'll submit</h3>
+          <ul>
+            <li>Pick one of the four Novita TB2.1 track datasets.</li>
+            <li>Run your own agent in Novita Sandbox.</li>
+            <li>Upload the Harbor job publicly.</li>
+            <li>Submit the public Harbor Hub job link for review.</li>
+          </ul>
+        </section>
+
+        <section class="modal-panel" aria-label="Prize pool">
+          <h3>Prize pool</h3>
+          <div class="prize-list">
+            <div class="prize-item"><span>Each track winner</span><strong>$500 Sandbox + $200 LLM</strong></div>
+            <div class="prize-item"><span>Trial credits</span><strong>$100 free trial + $20 LLM application</strong></div>
+            <div class="prize-item"><span>Community reports</span><strong>$20-$50</strong></div>
+            <div class="prize-item"><span>Startup Program</span><strong>Up to $10k</strong></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="timeline" aria-label="Challenge timeline">
+        <h3>Challenge flow</h3>
+        <div class="timeline-grid">
+          <div class="timeline-card"><strong>Build & run</strong><span>Select a track and run your agent on Novita Sandbox.</span></div>
+          <div class="timeline-card"><strong>Submit job</strong><span>Upload publicly to Harbor Hub and paste the job link.</span></div>
+          <div class="timeline-card"><strong>Review & rank</strong><span>Eligible public jobs are parsed and ranked on the leaderboard.</span></div>
+        </div>
+      </section>
+
+      <div class="modal-grid">
+        <section class="modal-panel" aria-label="How you are judged">
+          <h3>How you're judged</h3>
+          <div class="judging-grid">
+            <div class="judging-card"><strong>100%</strong><span>Harbor framework score from the submitted public job.</span></div>
+            <div class="judging-card"><strong>Required</strong><span>The job must be public and run on the matching Novita TB2.1 dataset.</span></div>
+          </div>
+        </section>
+
+        <section class="modal-panel" aria-label="Why join">
+          <h3>Why join?</h3>
+          <ul>
+            <li>Compare your agent on public TB2.1 tracks.</li>
+            <li>Test real sandbox execution instead of a local-only demo.</li>
+            <li>Earn Novita credits for strong runs and useful reports.</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="modal-actions">
+        <a class="btn" href="https://discord.gg/dTVYXBvMP6" target="_blank" rel="noreferrer">Join via Discord</a>
+        <button class="btn secondary" type="button" disabled aria-disabled="true">$20 LLM credits application coming soon</button>
+        <a class="btn secondary" href="#tracks">Choose a track</a>
+        <a class="btn secondary" href="#submit">Submit Harbor job</a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="details-modal" id="startup-modal" aria-labelledby="startup-title">
+    <div class="modal-inner">
+      <div class="modal-head">
+        <div>
+          <h2 class="modal-title" id="startup-title">Novita Startup Program</h2>
+          <p class="modal-kicker">Up to $10,000 in cloud credits for AI-native startups.</p>
+        </div>
+        <button class="modal-close" type="button" data-close-startup aria-label="Close startup details">×</button>
+      </div>
+
+      <div class="modal-callout">
+        For venture-backed startups building with Model APIs, Agent Sandbox, AI agents, evals,
+        devtools, or compute-heavy AI products.
+      </div>
+
+      <div class="modal-grid">
+        <section class="modal-panel" aria-label="Credit journey">
+          <h3>Credit journey</h3>
+          <ul>
+            <li>Start with up to $1,000 in cloud credits, typically $500.</li>
+            <li>Cover usage across Model APIs and Agent Sandbox.</li>
+            <li>After initial allocation, Novita covers 25% of ongoing usage up to another $5,000.</li>
+            <li>Provide up to $4,000 in credits when the startup becomes L3.</li>
+          </ul>
+        </section>
+
+        <section class="modal-panel" aria-label="What credits cover">
+          <h3>What credits cover</h3>
+          <div class="prize-list">
+            <div class="prize-item"><span>Model APIs</span><strong>LLM / image / video / voice</strong></div>
+            <div class="prize-item"><span>Agent Sandbox</span><strong>Execution credits</strong></div>
+            <div class="prize-item"><span>Ongoing usage</span><strong>25% covered</strong></div>
+            <div class="prize-item"><span>Max allocation</span><strong>$10,000</strong></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="modal-grid">
+        <section class="modal-panel" aria-label="Eligibility criteria">
+          <h3>Eligibility</h3>
+          <ul>
+            <li>Series B or earlier, with latest round within the last 12 months.</li>
+            <li>AI-native business where AI is core to the product.</li>
+            <li>Participating in or completed other startup programs.</li>
+            <li>Current providers, monthly spend, team, backing VCs, and traction are reviewed.</li>
+            <li>Ideally familiar with OpenAI costs and total Novita AI spend is $1,000 or less.</li>
+          </ul>
+        </section>
+
+        <section class="modal-panel" aria-label="Program goal">
+          <h3>Program goal</h3>
+          <ul>
+            <li>Support 10-20 startups with up to $10,000 each.</li>
+            <li>Average expected allocation is around $5,000 per company.</li>
+            <li>Total program budget target is $150,000.</li>
+            <li>Designed to identify serious L5+ customer potential.</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn" type="button" disabled aria-disabled="true">Apply form coming soon</button>
+        <a class="btn secondary" href="mailto:devrel@novita.ai?subject=Novita%20Startup%20Program">Contact Novita</a>
+      </div>
+    </div>
+  </dialog>
 
   <footer>
     <div class="wrap">Terminal-Bench 2.1 · Novita Sandbox execution · Harbor Hub job links · live public leaderboard</div>
@@ -1138,6 +1881,12 @@
     const note = document.querySelector("#submit-note");
     const body = document.querySelector("#leaderboard-body");
     const filters = document.querySelectorAll(".filter");
+    const detailsModal = document.querySelector("#details-modal");
+    const openDetails = document.querySelector("[data-open-details]");
+    const closeDetails = document.querySelector("[data-close-details]");
+    const startupModal = document.querySelector("#startup-modal");
+    const openStartup = document.querySelector("[data-open-startup]");
+    const closeStartup = document.querySelector("[data-close-startup]");
     const activeFilter = () => document.querySelector(".filter.active")?.dataset.track || "All";
 
     function escapeHtml(value) {
@@ -1226,6 +1975,38 @@
         .catch((error) => {
           note.textContent = error.message;
         });
+    });
+
+    openDetails?.addEventListener("click", () => {
+      if (typeof detailsModal.showModal === "function") {
+        detailsModal.showModal();
+      }
+    });
+
+    closeDetails?.addEventListener("click", () => {
+      detailsModal.close();
+    });
+
+    detailsModal?.addEventListener("click", (event) => {
+      if (event.target === detailsModal) {
+        detailsModal.close();
+      }
+    });
+
+    openStartup?.addEventListener("click", () => {
+      if (typeof startupModal.showModal === "function") {
+        startupModal.showModal();
+      }
+    });
+
+    closeStartup?.addEventListener("click", () => {
+      startupModal.close();
+    });
+
+    startupModal?.addEventListener("click", (event) => {
+      if (event.target === startupModal) {
+        startupModal.close();
+      }
     });
 
     loadLeaderboard();
