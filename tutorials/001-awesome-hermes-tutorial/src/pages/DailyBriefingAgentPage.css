@@ -1,0 +1,48 @@
+.briefing-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.briefing-flow > div {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.briefing-flow span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.briefing-flow strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.briefing-flow p {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .briefing-flow {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,207 @@
+/* ═══════════════════════════════════════════
+   Meeting Notes Use Case
+   ═══════════════════════════════════════════ */
+
+.meeting-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.meeting-insight {
+  margin: 22px 0;
+  padding: 18px 20px;
+  border: 1px solid rgba(232, 147, 10, 0.28);
+  border-left: 4px solid var(--accent);
+  border-radius: 12px;
+  background: var(--accent-dim);
+}
+
+.meeting-insight--compact {
+  margin-bottom: 0;
+}
+
+.meeting-insight strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.meeting-insight p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.meeting-flow > div,
+.meeting-source-grid > div,
+.meeting-tools > div,
+.meeting-output-card {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.meeting-flow > div {
+  padding: 22px;
+}
+
+.meeting-flow span {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  border-radius: 50%;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.meeting-flow strong {
+  display: block;
+  margin-bottom: 7px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.meeting-flow p,
+.meeting-source-grid p,
+.meeting-tools p,
+.meeting-output-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.meeting-source-grid,
+.meeting-tools,
+.meeting-automation-grid,
+.meeting-output-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.meeting-source-grid > div,
+.meeting-tools > div,
+.meeting-automation-grid > div,
+.meeting-output-card {
+  padding: 20px;
+}
+
+.meeting-automation-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.meeting-automation-grid > div {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.meeting-automation-grid span {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: 5px;
+  padding: 4px 9px;
+}
+
+.meeting-automation-grid h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.meeting-automation-grid code {
+  font-size: 0.92em;
+}
+
+.meeting-source-grid h4,
+.meeting-output-card h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.meeting-tools span {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--indigo);
+  background: var(--indigo-dim);
+  border-radius: 5px;
+  padding: 4px 9px;
+}
+
+.meeting-output-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.meeting-output-card {
+  background: var(--bg-primary);
+}
+
+.meeting-reference {
+  margin-top: 24px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-elevated);
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.meeting-reference a {
+  color: var(--indigo);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.meeting-reference a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 920px) {
+  .meeting-flow,
+  .meeting-automation-grid,
+  .meeting-output-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .meeting-source-grid,
+  .meeting-tools {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .meeting-flow,
+  .meeting-automation-grid,
+  .meeting-output-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,63 @@
+.code-block {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 14px 0 18px;
+}
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 18px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.code-lang {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.code-copy {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.code-copy:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 18px 22px;
+  overflow-x: auto;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.code-block code {
+  font-family: var(--font-mono);
+  font-size: 14.5px;
+  line-height: 1.75;
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  padding: 0;
+}

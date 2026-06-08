@@ -1,0 +1,79 @@
+.guide-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.guide-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  text-decoration: none;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+}
+
+.guide-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.guide-card--disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.guide-card--disabled:hover {
+  border-color: var(--border);
+  box-shadow: none;
+  transform: none;
+}
+
+.guide-card-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.guide-card-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.guide-card-text h4 {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.guide-card-text p {
+  font-size: 14.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.guide-card-arrow {
+  font-size: 20px;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.guide-card:hover .guide-card-arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .guide-cards {
+    grid-template-columns: 1fr;
+  }
+}

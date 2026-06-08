@@ -2,22 +2,29 @@
 
 An open-source collection of vibe-coded landing pages, experiments, and campaign microsites.
 
-Each folder under `landings/` is a standalone landing page source. Most projects can be opened, edited, and deployed from their own folder.
+Each project folder is a standalone source. Most projects can be opened, edited, and deployed from their own folder.
 
-## Landings
+## Hackathons
 
-| # | Project | Source Folder | Live Demo | Original Repo |
+| # | Project | Type | Source Folder | Live Demo |
 |---|---|---|---|---|
-| 001 | Harbor Agent Benchmark Novita Sandbox | [`landings/001-harbor-agent-benchmark-novita-sandbox`](./landings/001-harbor-agent-benchmark-novita-sandbox) | https://outputs-orpin-beta.vercel.app | https://github.com/Alex-yang00/harbor-agent-benchmark-novita-sandbox |
+| 001 | Harbor Agent Benchmark Novita Sandbox | Hackathon landing page | [`hackathons/001-harbor-agent-benchmark-novita-sandbox`](./hackathons/001-harbor-agent-benchmark-novita-sandbox) | https://outputs-orpin-beta.vercel.app |
+
+## Tutorials
+
+| # | Project | Type | Source Folder | Live Demo |
+|---|---|---|---|---|
+| 001 | Awesome Hermes Tutorial | Tutorial site | [`tutorials/001-awesome-hermes-tutorial`](./tutorials/001-awesome-hermes-tutorial) | TBD |
 
 ## Workflow
 
-Add each new landing page as its own folder:
+Add each new project as its own folder under the right category:
 
 ```txt
-landings/
+hackathons/
   001-harbor-agent-benchmark-novita-sandbox/
-  002-next-landing/
+tutorials/
+  001-awesome-hermes-tutorial/
 ```
 
-For Vercel deployment, create one Vercel project per standalone landing page and set the project Root Directory to the landing folder.
+For Vercel deployment, create one Vercel project per standalone project and set the project Root Directory to that folder.
