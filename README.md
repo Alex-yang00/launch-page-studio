@@ -1,4 +1,4 @@
-# Vibe Landing Lab
+# Launch Page Studio
 
 An open-source collection of vibe-coded landing pages, experiments, and campaign microsites.
 
